@@ -1,40 +1,21 @@
-<virtualhost> 
-     ServerAdmin admin@yoursite.com 
-     ServerName rest120.herokuapp.com 
-     ServerAlias rest120.herokuapp.com 
-     DocumentRoot rest120.herokuapp.com/public
-     ErrorLog ${APACHE_LOG_DIR}/error.log
-     CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-     # You must your the <directory> container. For more information see     filesystem containers 
-     # http://httpd.apache.org/docs/current/sections.html#virtualhost 
-
-     <directory />
-
-    # You more than likely can the remove the <ifModule> container as your Rewrite 
-    # Engine is probably turned on in your main server config file 
-    # (check here: /etc/apache2/apache2.conf) but it is here for structure. 
-
-    <IfModule mod_rewrite.c>
-            Options +FollowSymlinks
-            RewriteEngine On
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
     </IfModule>
 
-    # Redirects WWW URL's to Non-WWW URL's
+    RewriteEngine On
 
-    <IfModule mod_rewrite.c>
-            RewriteCond %{HTTPS} !=on
-            RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
-            RewriteRule ^ http://%1%{REQUEST_URI} [R=301,L]
-    </IfModule>
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
 
-     # If there is a specific directory within your Virtual Host that you wanted to 
-     # modify, you would have to nest another <directory> container within the root directory
-     # of virtual host previously declared with reference to the directory.  
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
 
-     <directory /some-directory> 
-             # your rules would go here.
-     </directory>
-
-</directory>
-</virtualhost> 
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
