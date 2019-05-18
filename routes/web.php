@@ -11,4 +11,6 @@
 |
  */
 //
-Route::get('/', 'trolei');
+Route::get('/', function () {
+	return response()->view('welcome', [], 200);
+});
