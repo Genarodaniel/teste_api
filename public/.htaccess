@@ -1,8 +1,8 @@
 <virtualhost> 
      ServerAdmin admin@yoursite.com 
-     ServerName yoursite.com 
-     ServerAlias www.yoursite.com 
-     DocumentRoot /var/www/yoursite.com/public_html
+     ServerName rest120.herokuapp.com 
+     ServerAlias rest120.herokuapp.com 
+     DocumentRoot rest120.herokuapp.com/public
      ErrorLog ${APACHE_LOG_DIR}/error.log
      CustomLog ${APACHE_LOG_DIR}/access.log combined
 
@@ -37,3 +37,4 @@
      </directory>
 
 </directory>
+</virtualhost> 
